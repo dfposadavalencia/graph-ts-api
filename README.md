@@ -18,7 +18,7 @@ Go to http://localhost:5000/graphql to access to the GraphQL server.
 
 This are some examples to access the data:
 
-**Operation GetMovies**
+# **Operation GetMovies**
 ```
 query GetMovies {
   getMovies {
@@ -33,7 +33,7 @@ query GetMovies {
 }
 ```
 
-**Operation AddMovie**
+# **Operation AddMovie**
 ```
 mutation AddMovie($movieInput: CreateMovieInput!) {
   addMovie(MovieInput: $movieInput) {
