@@ -1,0 +1,38 @@
+{
+  "name": "graph-ts-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint" : "eslint . --ext .ts",
+    "build": "rimraf ./build && tsc",
+    "start": "cross-env NODE_ENV=production ts-node build/index.js",
+    "dev": "nodemon src/index.ts",
+    "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./ormconfig.ts",
+    "create-table": "npm run typeorm:cli -- migration:run",
+    "drop-table": "npm run typeorm:cli -- migration:revert"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-express": "^3.6.4",
+    "class-validator": "^0.13.2",
+    "express": "^4.17.3",
+    "graphql": "^15.8.0",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1",
+    "typedi": "^0.10.0",
+    "typeorm": "^0.2.45"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.0",
+    "eslint": "^8.11.0",
+    "nodemon": "^2.0.15",
+    "pg": "^8.7.3",
+    "prettier": "^2.6.0",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.2"
+  }
+}
