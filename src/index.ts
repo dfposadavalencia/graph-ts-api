@@ -5,13 +5,14 @@ import { Container } from 'typedi';
 import express from 'express';
 import { MovieResolver } from './resolvers/movie';
 import initializeDB from './database/index';
+import {ActorResolver} from "./resolvers/actor";
 
 const app = express();
 
 async function main() {
     await initializeDB();
     const schema = await buildSchema({
-        resolvers: [MovieResolver],
+        resolvers: [MovieResolver, ActorResolver],
         container: Container,
         emitSchemaFile: true
     });

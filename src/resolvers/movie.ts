@@ -4,17 +4,12 @@ import { Movie, CreateMovieInput, UpdateMovieInput } from '../schema/movie';
 import { MovieService } from '../database/services/movieService';
 
 @Service()
-@Resolver((of) => Movie)
+@Resolver(Movie)
 export class MovieResolver {
     constructor(private movieService: MovieService) {}
 
     @Query((returns) => [Movie], { nullable: true })
     async getMovies(): Promise<Movie[]> {
-        try {
-            await this.movieService.getAll();
-        } catch (e) {
-            console.debug(e);
-        }
         return await this.movieService.getAll();
     }
 

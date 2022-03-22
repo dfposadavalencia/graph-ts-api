@@ -3,9 +3,29 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Actor {
+  birthdayDate: DateTime!
+  createdAt: DateTime!
+  id: Int!
+  lastName: String!
+  movies: [Movie!]!
+  name: String!
+  updatedAt: DateTime!
+}
+
+input CreateActorInput {
+  birthdayDate: DateTime
+  lastName: String!
+  name: String!
+}
+
+input CreateActorMovieInput {
+  id: Int!
+}
+
 input CreateMovieInput {
-  actors: [String!]!
   description: String!
+  movie_actors: [CreateActorMovieInput!]
   releaseYear: String
   title: String!
 }
@@ -16,7 +36,7 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 scalar DateTime
 
 type Movie {
-  actors: [String!]!
+  actors: [Actor!]!
   createdAt: DateTime!
   description: String!
   id: Int!
@@ -26,14 +46,23 @@ type Movie {
 }
 
 type Mutation {
+  addActor(ActorInput: CreateActorInput!): Actor!
   addMovie(MovieInput: CreateMovieInput!): Movie!
+  deleteActor(id: Int!): Boolean!
   deleteMovie(id: Int!): Boolean!
+  updateActor(ActorInput: UpdateActorInput!, id: Int!): Actor!
   updateMovie(MovieInput: UpdateMovieInput!, id: Int!): Movie!
 }
 
 type Query {
+  getActor(id: Int!): Actor
+  getActors: [Actor!]
   getMovie(id: Int!): Movie
   getMovies: [Movie!]
+}
+
+input UpdateActorInput {
+  name: String
 }
 
 input UpdateMovieInput {

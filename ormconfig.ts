@@ -25,7 +25,7 @@ const config: ConnectionOptions = {
     password: DB_PASSWORD,
     database: NODE_ENV === 'production' ? PROD_DB : DEV_DB,
     synchronize: NODE_ENV === 'production' ? false : true,
-    logging: false,
+    logging: true,
     entities: [`${dir}/database/entity/**/*.{ts,js}`],
     migrations: [`${dir}/database/migrations/**/*.{ts,js}`],
     subscribers: [`${dir}/database/subscriber/**/*.{ts,js}`],
@@ -34,6 +34,7 @@ const config: ConnectionOptions = {
         entitiesDir: `${dir}/database/entity`,
         subscribersDir: `${dir}/database/subscriber`,
     },
+    logger: "advanced-console"
 };
 
 export = config;

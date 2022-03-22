@@ -1,5 +1,7 @@
 import {Field, ObjectType, InputType, Int} from 'type-graphql';
 import { Length } from 'class-validator';
+import {Actor, CreateActorInput} from "./actor";
+import {ManyToMany} from "typeorm";
 
 @ObjectType()
 export class Movie {
@@ -12,8 +14,9 @@ export class Movie {
     @Field(type => String)
     description: string;
 
-    @Field((type) => [String])
-    actors: string[];
+    @Field(type => [Actor])
+    @ManyToMany(type => Actor, actor => actor.movies, { cascade: true })
+    actors: Actor[];
 
     @Field(type => String)
     releaseYear: string;
@@ -35,11 +38,17 @@ export class CreateMovieInput implements Partial<Movie> {
     @Length(10, 250)
     description: string;
 
-    @Field((type) => [String])
-    actors: string[];
+    @Field(type => [CreateActorMovieInput], {nullable: true})
+    movie_actors: CreateActorMovieInput[];
 
     @Field(type => String, { nullable: true })
     releaseYear: string;
+}
+
+@InputType()
+export class CreateActorMovieInput implements Partial<Actor>{
+    @Field(type => Int)
+    id: number;
 }
 
 @InputType()
