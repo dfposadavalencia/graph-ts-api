@@ -22,7 +22,7 @@ export class Movie extends BaseEntity {
     description: string;
 
     @ManyToMany(type => Actor, actor => actor.movies, { cascade: true })
-    @JoinTable({name:""})
+    @JoinTable()
     actors: Actor[];
 
     @Column("character varying", { nullable: true, name: 'release_year', length: 100 })
