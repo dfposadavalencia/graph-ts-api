@@ -1,6 +1,7 @@
 import {Field, ObjectType, InputType, Int} from 'type-graphql';
 import {Length} from "class-validator";
-import {Movie} from "./movie";
+import {OneToMany} from "typeorm";
+import {MovieActor} from "./movieActorSchema";
 
 @ObjectType()
 export class Actor {
@@ -16,8 +17,9 @@ export class Actor {
     @Field(type => Date)
     birthdayDate: Date;
 
-    @Field((type) => [Movie])
-    movies: Movie[];
+    @Field((type) => [MovieActor])
+    @OneToMany(type => MovieActor, movieActor => movieActor.actor, { cascade: true })
+    movieActors: MovieActor[];
 
     @Field(type => Date)
     updatedAt: Date;

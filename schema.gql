@@ -8,7 +8,7 @@ type Actor {
   createdAt: DateTime!
   id: Int!
   lastName: String!
-  movies: [Movie!]!
+  movieActors: [MovieActor!]!
   name: String!
   updatedAt: DateTime!
 }
@@ -24,8 +24,8 @@ input CreateActorMovieInput {
 }
 
 input CreateMovieInput {
+  actors: [CreateActorMovieInput!]
   description: String!
-  movie_actors: [CreateActorMovieInput!]
   releaseYear: String
   title: String!
 }
@@ -36,12 +36,19 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 scalar DateTime
 
 type Movie {
-  actors: [Actor!]!
   createdAt: DateTime!
   description: String!
   id: Int!
+  movieActors: [MovieActor!]!
   releaseYear: String!
   title: String!
+  updatedAt: DateTime!
+}
+
+type MovieActor {
+  actor: Actor!
+  createdAt: DateTime!
+  movie: Movie!
   updatedAt: DateTime!
 }
 

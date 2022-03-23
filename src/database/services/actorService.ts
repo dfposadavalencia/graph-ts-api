@@ -1,16 +1,19 @@
 import { Service } from 'typedi';
 import { Actor } from '../entity/Actor';
-import { CreateActorInput, UpdateActorInput } from '../../schema/actor';
+import { CreateActorInput, UpdateActorInput } from '../../schema/actorSchema';
 
 @Service()
 export class ActorService {
 
     getAll = async (): Promise<Actor[]> => {
-        return await Actor.find({relations: ["movies"]});
+        return await Actor.find({
+            relations: ["movieActors", "movieActors.movie"],
+            order: {["id"]: 'ASC'}
+        });
     };
 
     getOne = async (id: number): Promise<Actor | undefined> => {
-        const actor = await Actor.findOne(id, {relations: ["movies"]});
+        const actor = await Actor.findOne(id, {relations: ["movieActors", "movieActors.movie"]});
 
         if (!actor) {
             throw new Error(`The actor with id: ${id} does not exist!`);

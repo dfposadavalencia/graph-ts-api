@@ -5,10 +5,9 @@ import {
     BaseEntity,
     CreateDateColumn,
     UpdateDateColumn,
-    ManyToMany,
-    JoinTable
+    OneToMany
 } from 'typeorm';
-import {Actor} from "./Actor";
+import {MovieActor} from "./MovieActor";
 
 @Entity()
 export class Movie extends BaseEntity {
@@ -21,9 +20,8 @@ export class Movie extends BaseEntity {
     @Column("character varying", {length: 250})
     description: string;
 
-    @ManyToMany(type => Actor, actor => actor.movies, { cascade: true })
-    @JoinTable()
-    actors: Actor[];
+    @OneToMany(type => MovieActor, movieActor => movieActor.movie, { cascade: true, nullable: true })
+    movieActors: MovieActor[];
 
     @Column("character varying", { nullable: true, name: 'release_year', length: 100 })
     releaseYear: string;

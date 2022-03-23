@@ -4,9 +4,10 @@ import {
     Column,
     BaseEntity,
     CreateDateColumn,
-    UpdateDateColumn, ManyToMany, JoinTable,
+    UpdateDateColumn,
+    OneToMany,
 } from 'typeorm';
-import {Movie} from "./Movie";
+import {MovieActor} from "./MovieActor";
 
 @Entity()
 export class Actor extends BaseEntity {
@@ -22,8 +23,8 @@ export class Actor extends BaseEntity {
     @Column("date", {name: 'birthday_date'})
     birthdayDate: Date;
 
-    @ManyToMany(type => Movie, movie => movie.actors)
-    movies: Movie[];
+    @OneToMany(type => MovieActor, movieActor => movieActor.actor, { cascade: true, nullable: true })
+    movieActors: MovieActor[];
 
     @CreateDateColumn({ name: 'updated_at' })
     updatedAt: Date;

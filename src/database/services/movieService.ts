@@ -1,17 +1,21 @@
 import { Service } from 'typedi';
 import { Movie } from '../entity/Movie';
-import { CreateMovieInput, UpdateMovieInput } from '../../schema/movie';
+import { CreateMovieInput, UpdateMovieInput } from '../../schema/movieSchema';
+import {MovieActor} from "../entity/MovieActor";
 import {Actor} from "../entity/Actor";
 
 @Service()
 export class MovieService {
 
     getAll = async (): Promise<Movie[]> => {
-        return await Movie.find({relations:["actors"], order: {["id"]: 'ASC'}, loadRelationIds: false});
+        return await Movie.find({
+            relations: ["movieActors", "movieActors.actor"],
+            order: {["id"]: 'ASC'}
+        });
     };
 
     getOne = async (id: number): Promise<Movie | undefined> => {
-        const movie = await Movie.findOne(id , {relations:["actors"]});
+        const movie = await Movie.findOne(id , {relations:["movieActors", "movieActors.actor"]});
 
         if (!movie) {
             throw new Error(`The movie with id: ${id} does not exist!`);
@@ -21,12 +25,16 @@ export class MovieService {
 
     create = async (createMovieInput: CreateMovieInput): Promise<Movie> => {
         let movie = Movie.create(createMovieInput);
-
-        movie.actors = [];
-        for (let actorId of createMovieInput.movie_actors) {
+        const new_movie = await movie.save();
+        movie.movieActors = [];
+        for (let actorId of createMovieInput.actors) {
+            const movieActors = new MovieActor();
+            movieActors.movie = new_movie;
             // @ts-ignore
-            movie.actors.push(await Actor.findOne(actorId.id));
+            movieActors.actor = await Actor.findOne(actorId.id);
+            movie.movieActors.push(movieActors);
         }
+
         return await movie.save();
     };
 

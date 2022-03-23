@@ -3,9 +3,9 @@ import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { Container } from 'typedi';
 import express from 'express';
-import { MovieResolver } from './resolvers/movie';
 import initializeDB from './database/index';
-import {ActorResolver} from "./resolvers/actor";
+import { ActorResolver } from "./resolvers/actorResolver";
+import { MovieResolver } from './resolvers/movieResolver';
 
 const app = express();
 

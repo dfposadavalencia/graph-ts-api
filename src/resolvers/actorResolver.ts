@@ -1,6 +1,6 @@
 import {Query, Resolver, Mutation, Arg, Int} from 'type-graphql';
 import { Service } from 'typedi';
-import { Actor, CreateActorInput, UpdateActorInput } from '../schema/actor';
+import { Actor, CreateActorInput, UpdateActorInput } from '../schema/actorSchema';
 import { ActorService } from '../database/services/actorService';
 
 @Service()

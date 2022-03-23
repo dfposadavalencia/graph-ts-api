@@ -1,6 +1,6 @@
 import {Query, Resolver, Mutation, Arg, Int} from 'type-graphql';
 import { Service } from 'typedi';
-import { Movie, CreateMovieInput, UpdateMovieInput } from '../schema/movie';
+import { Movie, CreateMovieInput, UpdateMovieInput } from '../schema/movieSchema';
 import { MovieService } from '../database/services/movieService';
 
 @Service()
