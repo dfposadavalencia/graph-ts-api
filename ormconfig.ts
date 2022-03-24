@@ -10,8 +10,7 @@ const {
     DB_HOST,
     DB_PASSWORD,
     DB_PORT,
-    DEV_DB,
-    PROD_DB,
+    DB_NAME,
     NODE_ENV,
 } = process.env;
 
@@ -23,18 +22,17 @@ const config: ConnectionOptions = {
     port: Number(DB_PORT),
     username: DB_USER,
     password: DB_PASSWORD,
-    database: NODE_ENV === 'production' ? PROD_DB : DEV_DB,
+    database: DB_NAME,
     synchronize: NODE_ENV === 'production' ? false : true,
-    logging: true,
-    entities: [`${dir}/database/entity/**/*.{ts,js}`],
-    migrations: [`${dir}/database/migrations/**/*.{ts,js}`],
-    subscribers: [`${dir}/database/subscriber/**/*.{ts,js}`],
+    logging: false,
+    entities: [`${dir}/database/entity/*.{ts,js}`],
+    migrations: [`${dir}/database/migrations/*.{ts,js}`],
+    //subscribers: [`${dir}/database/subscriber/**/*.{ts,js}`],
     cli: {
-        migrationsDir: `${dir}/database/migrations`,
         entitiesDir: `${dir}/database/entity`,
-        subscribersDir: `${dir}/database/subscriber`,
-    },
-    logger: "advanced-console"
+        migrationsDir: `${dir}/database/migrations`,
+        //subscribersDir: `${dir}/database/subscriber`,
+    }
 };
 
 export = config;
